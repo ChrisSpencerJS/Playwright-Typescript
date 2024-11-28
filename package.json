@@ -1,0 +1,18 @@
+{
+  "name": "azure-testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test-chromium": "npx playwright test --project=chromium",
+    "test-firefox": "npx playwright test --project=firefox",
+    "test-all": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.2"
+  }
+}
