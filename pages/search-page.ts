@@ -3,12 +3,16 @@ import { expect, type Locator, type Page } from '@playwright/test';
 export class SearchPage {
   readonly page: Page;
   readonly searchBox: Locator;
+  readonly mobileSearchBox: Locator;
   readonly searchButton: Locator;
+  readonly isMobile: boolean;
 
-  constructor(page: Page) {
+  constructor(page: Page, isMobile: boolean) {
     this.page = page;
+    this.isMobile = isMobile;
     this.searchBox = page.getByRole('combobox');
     this.searchButton = page.getByLabel('Google Search').first();
+    this.mobileSearchBox = page.getByRole('textbox', { name: 'Google Search' });
   }
 
   async goto() {
@@ -16,10 +20,16 @@ export class SearchPage {
   }
 
   async enterSearchTerm(text: string) {
-    await this.searchBox.fill(text);
+    if(this.isMobile)
+      await this.mobileSearchBox.fill(text);
+    else
+      await this.searchBox.fill(text);
   }
 
   async startSearch() {
-    await this.searchButton.click();
+    if(this.isMobile)
+      await this.page.keyboard.press('Enter');
+    else
+      await this.searchButton.click();
   }
 }
